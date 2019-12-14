@@ -31,7 +31,7 @@ class ApiView(FlaskView):
         print('*** ************ ***')
 
         voice = base64.b64decode(voice)
-
+        voice = voice.decode('utf-8')
         print('*** request.json ***')
         print(voice)
         print('*** ************ ***')
