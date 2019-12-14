@@ -15,25 +15,33 @@ class SearchView(FlaskView):
 
     def get(self):
         content = request.args.get("content")
-        speaked_at = request.args.get("speaked_at")
+        speaked_at_start = request.args.get("speaked_at_start")
+        speaked_at_end = request.args.get("speaked_at_end")
 
-        if not content and not speaked_at:
+        if not content and (not speaked_at_start or not speaked_at_end):
             return render_template('plugins/search/index.html', title="this is search title")
 
-        elif not content:
-            speaked_at = dateutil.parser.parse(speaked_at)
+        elif speaked_at_start and speaked_at_end:
+            speaked_at_start = dateutil.parser.parse(speaked_at_start)
+            speaked_at_end = dateutil.parser.parse(speaked_at_end)
 
             conversations = session.query(Conversation) \
-                .filter(Conversation.speaked_at == speaked_at)
+                .filter(Conversation.speaked_at >= speaked_at_start, Conversation.speaked_at <= speaked_at_end)
 
-        elif not speaked_at:
+        elif content:
             conversations = session.query(Conversation) \
                 .filter(Conversation.content.like(f'%{content}%'))
 
         else:
-            conversations = session.query(Conversation) \
-                .filter(Conversation.content.like(f'%{content}%'), Conversation.speaked_at == speaked_at) \
+            speaked_at_start = dateutil.parser.parse(speaked_at_start)
+            speaked_at_end = dateutil.parser.parse(speaked_at_end)
 
+            conversations = session.query(Conversation) \
+                .filter(
+                    Conversation.content.like(f'%{content}%'),
+                    Conversation.speaked_at >= speaked_at_start,
+                    Conversation.speaked_at <= speaked_at_end
+            )
 
         print(f"=== conversation ===", file=sys.stderr)
 
