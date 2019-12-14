@@ -2,7 +2,8 @@ import json
 import sys
 import wave
 import struct
-
+import os
+import time
 
 import key
 
@@ -20,6 +21,8 @@ authenticator = IAMAuthenticator(key.APIKEY)
 stt = SpeechToTextV1(authenticator=authenticator)
 stt.set_service_url(URL)
 
+count = 0
+
 
 def bin2wav(filedata, filename, channels=1, sampwidth=2, framerate=44100, nframe=0, comptype='NONE', compname='not compressed'):
     w = wave.Wave_write(filename)
@@ -31,6 +34,13 @@ def bin2wav(filedata, filename, channels=1, sampwidth=2, framerate=44100, nframe
 
 
 def recognize(binary):
+    while os.path.exists('/app/ibm.lock'):
+        time.sleep(1)
+
+    os.system('touch /app/ibm.lock')
+
+    global count
+    count += 1
     # result = []
     # for b in list(binary):
     #     result.append(b / 32768)
@@ -38,18 +48,19 @@ def recognize(binary):
 
     nframe = len(binary) // 2
     #struct.unpack_from(">I4sIIBB", binary, 8)
-    
+
     binary = list(binary)
 
     for i in range(nframe):
         binary[i*2], binary[i*2+1] = binary[i*2+1], binary[i*2]
 
     binary = bytes(binary)
-    #with open('tmp.wav', "wb") as f:
+    # with open('tmp.wav', "wb") as f:
     #    f.write(binary)
 
     # nframe = len(binary)
     bin2wav(filedata=binary, filename="tmp.wav", nframe=nframe)
+    bin2wav(filedata=binary, filename=f"tmp{count}.wav", nframe=nframe)
 
     with open("tmp.wav", "rb") as f:
         result = stt.recognize(
@@ -60,6 +71,8 @@ def recognize(binary):
     try:
         msg = result['results'][0]['alternatives'][0]['transcript']
         print(msg, file=sys.stderr)
+        os.system('rm /app/ibm.lock')
         return msg
     except:
+        os.system('rm /app/ibm.lock')
         return None
