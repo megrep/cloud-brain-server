@@ -8,7 +8,7 @@ Base = declarative_base()
 
 session = scoped_session(
     sessionmaker(
-        bind = ENGINE,
+        bind=ENGINE,
         autocommit=False,
     )
 )
@@ -16,10 +16,9 @@ session = scoped_session(
 
 class Conversation(Base):
     __tablename__ = 'conversation'
-    id = Column('id', Integer, primary_key = True)
+    id = Column('id', Integer, primary_key=True)
     text = Column('name', Text)
     speaked_at = Column('speaked_at', DateTime)
 
 
 Base.metadata.create_all(ENGINE)
-
