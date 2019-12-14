@@ -42,5 +42,4 @@ class SearchView(FlaskView):
                   file=sys.stderr)
         print(f"=== ============ ===", file=sys.stderr)
 
-        return "aaa"
-        # return render_template('plugins/search/result.html', DB="hello")
+        return render_template('plugins/search/result.html', conversations=conversations)
