@@ -1,8 +1,10 @@
-from flask import Flask
+from flask import Flask, request
 from flask_classy import FlaskView
 
 from setting import PLUGINS
 
+import base64
+import dateutil.parser
 
 app = Flask(__name__)
 
@@ -13,6 +15,33 @@ class IndexView(FlaskView):
 
 
 IndexView.register(app)
+
+
+class ApiView(FlaskView):
+    def post(self):
+        voice = request.json['data']
+        speaked_at = request.json['speaked_at']
+
+        print('*** request.json ***')
+        print(request.json)
+        print('*** ************ ***')
+
+        voice = base64.b64decode(voice)
+
+        print('*** request.json ***')
+        print(voice)
+        print('*** ************ ***')
+
+        speaked_at = dateutil.parser.parse(speaked_at)
+        print('**** speaked_at ****')
+        print(speaked_at)
+        print('*** ************ ***')
+
+        return "ok"
+
+
+ApiView.register(app)
+
 
 print('--- LOAD PLUGINS ---')
 for plugin in PLUGINS:
