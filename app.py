@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request
 from flask_classy import FlaskView
 
 from setting import PLUGINS
@@ -13,6 +13,19 @@ class IndexView(FlaskView):
 
 
 IndexView.register(app)
+
+
+class ApiView(FlaskView):
+    def post(self):
+        print('*** request.json ***')
+        print(request.json)
+        print('*** ************ ***')
+
+        return "ok"
+
+
+ApiView.register(app)
+
 
 print('--- LOAD PLUGINS ---')
 for plugin in PLUGINS:
