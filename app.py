@@ -43,9 +43,7 @@ class ApiView(FlaskView):
 
         # voiceを変換しチクリ
 
-        conversation = Conversation()
-        conversation.text = voice
-        conversation.speaked_at = speaked_at
+        conversation = Conversation(content=voice, speaked_at=speaked_at)
         session.add(conversation)
         session.commit()
 
