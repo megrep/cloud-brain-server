@@ -45,6 +45,7 @@ class ApiView(FlaskView):
         print('*** ************ ***')
 
         conversation = Conversation(content=voice, speaked_at=speaked_at)
+
         session.add(conversation)
         session.commit()
 
@@ -63,6 +64,7 @@ print('--------------------')
 if __name__ == '__main__':
     recognition.initialize()
 
-    app.run(debug=True, host='0.0.0.0', threaded=False)
+    app.run(debug=True, host='0.0.0.0', ssl_context=(
+        'cert/server.crt', 'cert/server.key'))
 
     recognition.kill()

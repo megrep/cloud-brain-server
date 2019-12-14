@@ -19,7 +19,17 @@
         <p>
           じかん<input
             type="datetime-local"
-            name="speaked_at"
+            name="speaked_at_start"
+            step="1"
+            value="2000-01-01T00:00:00"
+          />
+        </p>
+        から
+        <p>
+          じかん<input
+            type="datetime-local"
+            id="speaked_at_end"
+            name="speaked_at_end"
             step="1"
             value="2019-12-14T20:40"
           />
@@ -27,5 +37,30 @@
         <input type="submit" value="submit" class="my-button" />
       </form>
     </div>
+    <script>
+      function convetDateToIso(date) {
+        return (
+          date.getFullYear() +
+          "-" +
+          ("0" + (date.getMonth() + 1)).slice(-2) +
+          "-" +
+          ("0" + date.getDate()).slice(-2) +
+          "T" +
+          ("0" + date.getHours()).slice(-2) +
+          ":" +
+          ("0" + date.getMinutes()).slice(-2) +
+          ":" +
+          ("0" + date.getSeconds()).slice(-2)
+        );
+      }
+
+      var now = Date.now();
+      now = new Date(now);
+      now = convetDateToIso(now);
+
+      console.log(now);
+
+      document.getElementById("speaked_at_end").value = now;
+    </script>
   </body>
 </html>
