@@ -7,13 +7,23 @@ from model import session
 
 from setting import PLUGINS
 
+USE_IBM = True
+
 import base64
 import dateutil.parser
-import ibm
 import julius.recognition as recognition
+import threading
+import os
+import sys
+
+if USE_IBM:
+    import ibm
+    recognizer = ibm
+else:
+    import julius.recognition as julius
+    recognizer = julius
 
 app = Flask(__name__)
-
 
 class IndexView(FlaskView):
     def index(self):
@@ -22,6 +32,16 @@ class IndexView(FlaskView):
 
 IndexView.register(app)
 
+def recognize(voice, speaked_at):
+    voice = recognition.recognize(voice)
+    print('****** voice *******')
+    print(voice)
+    print('*** ************ ***')
+
+    conversation = Conversation(content=voice, speaked_at=speaked_at)
+
+    session.add(conversation)
+    session.commit()
 
 class ApiView(FlaskView):
     def post(self):
@@ -40,7 +60,7 @@ class ApiView(FlaskView):
         print('*** ************ ***')
 
         # voiceを認識
-        voice = ibm.recognize(voice)
+        voice = recognizer.recognize(voice)
         print('****** voice *******')
         print(voice)
         print('*** ************ ***')
