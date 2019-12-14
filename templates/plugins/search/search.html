@@ -1,0 +1,31 @@
+<html>
+  <head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.js"></script>
+
+    <meta charset="utf-8">
+    <title>search</title>
+    <link rel="stylesheet" href="/static/search.css">
+    <!--<link rel="stylesheet" href="https://unpkg.com/purecss@1.0.1/build/pure-min.css" integrity="sha384-oAOxQR6DkCoMliIh8yFnu25d7Eq/PHS21PClpwjOTeU2jRSq11vu66rf90/cZr47" crossorigin="anonymous">-->
+  </head>
+  <body>
+    <h1>CloudBrain</h1>
+    <div class="my-form">
+      <form action="/search/result" method="POST" class="pure-form pure-form-aligned" >
+
+        <p class="TT">入力処理</p>
+        <p class="cp_iptxt">ことば<input type="text" name="word" placeholder="数学の課題"></p>
+      	<p class="time">はじまりのじかん<br><input type="datetime-local" name="speaked_at_start" class="time-form"></p>
+        <br>
+        <p class="time">おわりのじかん<br><input id="speaked_at_end" type="datetime-local" name="speaked_at_end" class="time-form"></p>
+
+        <input type="submit" value="submit" class="my-bottun"/>
+      </form>
+    </div>
+    <script>
+      var now = Date.now();
+      var m = moment(now);
+      var string = m.format('YYYY-MM-DDThh:mm')
+      document.getElementById('speaked_at_end').value = string
+    </script>
+  </body>
+</html>
