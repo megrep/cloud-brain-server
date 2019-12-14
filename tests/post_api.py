@@ -1,10 +1,16 @@
 import json
 import requests
+import base64
 
+
+data = base64.b64encode(b'hello world').decode('utf-8')
 
 url = 'http://localhost:5000/api/'
-data = json.dumps({'name': 'mituba'})
+print(data)
 
+data = json.dumps({'data': data})
+
+print(data)
 result = requests.post(url, data, headers={'Content-Type': 'application/json'})
 
 print(result.text)
