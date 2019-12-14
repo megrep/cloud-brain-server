@@ -1,0 +1,19 @@
+h1 {
+  position: relative;
+  left: 345px;
+  display: inline-block;
+  margin-bottom: 1em;
+}
+h1:before {
+  content: '';
+  position: absolute;
+  bottom: -15px;
+  display: inline-block;
+  width: 60px;
+  height: 5px;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+  background-color: black;
+  border-radius: 2px;
+}
