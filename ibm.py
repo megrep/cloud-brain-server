@@ -1,6 +1,7 @@
 import json
 import sys
 import wave
+import struct
 
 
 import key
@@ -23,14 +24,31 @@ stt.set_service_url(URL)
 def bin2wav(filedata, filename, channels=1, sampwidth=2, framerate=44100, nframe=0, comptype='NONE', compname='not compressed'):
     w = wave.Wave_write(filename)
     p = (channels, sampwidth, framerate, nframe, comptype, compname)
+
     w.setparams(p)
     w.writeframes(filedata)
     w.close()
 
 
 def recognize(binary):
-    nframe = len(binary) // 2
+    # result = []
+    # for b in list(binary):
+    #     result.append(b / 32768)
+    # binary = bytes(result)
 
+    nframe = len(binary) // 2
+    #struct.unpack_from(">I4sIIBB", binary, 8)
+    
+    binary = list(binary)
+
+    for i in range(nframe):
+        binary[i*2], binary[i*2+1] = binary[i*2+1], binary[i*2]
+
+    binary = bytes(binary)
+    #with open('tmp.wav', "wb") as f:
+    #    f.write(binary)
+
+    # nframe = len(binary)
     bin2wav(filedata=binary, filename="tmp.wav", nframe=nframe)
 
     with open("tmp.wav", "rb") as f:
