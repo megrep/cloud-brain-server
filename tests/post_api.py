@@ -3,7 +3,7 @@ import requests
 import base64
 
 
-data = base64.b64encode(b'hello world').decode('utf-8')
+data = base64.b64encode(b'hello').decode('utf-8')
 
 url = 'http://localhost:5000/api/'
 print(data)
