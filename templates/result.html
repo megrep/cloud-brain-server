@@ -6,8 +6,20 @@
   </head>
   <body>
     <div class="Pi">
-      <p>登録したよ！！！</p>
+      <h3>result</h3>
+        <table border="１"　width="200">
+        <tr>
+          <th>時間</th>
+          <th>内容</th>
+        </tr>
+        {% for i,j in DB %}
+        <tr>
+          <td>{{i}}</td>
+          <td>{{j}}</td>
+        </tr>
+      {% endfor %}
+    </table>
     </div>
-    <a href="/home">home</a>
+    <a href="/search/home">home</a>
   </body>
-</html>>
+</html>
