@@ -4,8 +4,7 @@ from flask_classy import FlaskView
 from setting import PLUGINS
 
 import base64
-from datetime import datetime
-
+import dateutil.parser
 
 app = Flask(__name__)
 
@@ -33,7 +32,7 @@ class ApiView(FlaskView):
         print(voice)
         print('*** ************ ***')
 
-        speaked_at = datetime.fromisoformat(speaked_at)
+        speaked_at = dateutil.parser.parse(speaked_at)
         print('**** speaked_at ****')
         print(speaked_at)
         print('*** ************ ***')
