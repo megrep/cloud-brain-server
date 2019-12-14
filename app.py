@@ -9,6 +9,7 @@ from setting import PLUGINS
 
 import base64
 import dateutil.parser
+import ibm
 import julius.recognition as recognition
 
 app = Flask(__name__)
@@ -39,7 +40,7 @@ class ApiView(FlaskView):
         print('*** ************ ***')
 
         # voiceを認識
-        voice = recognition.recognize(voice)
+        voice = ibm.recognize(voice)
         print('****** voice *******')
         print(voice)
         print('*** ************ ***')
