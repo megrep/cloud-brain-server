@@ -46,7 +46,7 @@ p.TT{
 }
 .time{
   position: relative;
-  left: 300px;
+  left: 30px;
 }
 .con{
   position: relative;
@@ -56,6 +56,7 @@ p.TT{
   position: relative;
   border: none;
   border-bottom: 2px solid #1b2538;
+  width: 80%;
   color: gray;
   font-weight: bold;
 }
