@@ -1,1 +1,31 @@
-<h1>{{title}}</h1>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>search</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/purecss@1.0.1/build/pure-min.css"
+      integrity="sha384-oAOxQR6DkCoMliIh8yFnu25d7Eq/PHS21PClpwjOTeU2jRSq11vu66rf90/cZr47"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <div class="my-form">
+      <form action="." method="GET" class="pure-form pure-form-aligned">
+        <p>入力してくれや</p>
+        <p>
+          ことば<input type="text" name="content" placeholder="数学の課題" />
+        </p>
+        <p>
+          じかん<input
+            type="datetime-local"
+            name="speaked_at"
+            step="1"
+            value="2019-12-14T20:40"
+          />
+        </p>
+        <input type="submit" value="submit" class="my-button" />
+      </form>
+    </div>
+  </body>
+</html>

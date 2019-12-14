@@ -31,7 +31,7 @@ class ApiView(FlaskView):
         print('*** ************ ***')
 
         voice = base64.b64decode(voice)
-
+        voice = voice.decode('utf-8')
         print('*** request.json ***')
         print(voice)
         print('*** ************ ***')
@@ -43,9 +43,7 @@ class ApiView(FlaskView):
 
         # voiceを変換しチクリ
 
-        conversation = Conversation()
-        conversation.text = voice
-        conversation.speaked_at = speaked_at
+        conversation = Conversation(content=voice, speaked_at=speaked_at)
         session.add(conversation)
         session.commit()
 

@@ -1,0 +1,25 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>result</title>
+    <!--<link rel="stylesheet" href="https://unpkg.com/purecss@1.0.1/build/pure-min.css" integrity="sha384-oAOxQR6DkCoMliIh8yFnu25d7Eq/PHS21PClpwjOTeU2jRSq11vu66rf90/cZr47" crossorigin="anonymous">-->
+  </head>
+  <body>
+    <div class="Pi">
+      <h3>result</h3>
+      <table border="１" 　width="200">
+        <tr>
+          <th>時間</th>
+          <th>内容</th>
+        </tr>
+        {% for conversation in conversations %}
+        <tr>
+          <td>{{conversation.speaked_at}}</td>
+          <td>{{conversation.content}}</td>
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
+    <a href="/search/home">home</a>
+  </body>
+</html>

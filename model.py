@@ -1,5 +1,5 @@
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import create_engine, Column, Integer, Text, DateTime
+from sqlalchemy import create_engine, Column, Integer, String, Text, DateTime
 from sqlalchemy.orm import scoped_session, sessionmaker
 
 
@@ -17,7 +17,7 @@ session = scoped_session(
 class Conversation(Base):
     __tablename__ = 'conversation'
     id = Column('id', Integer, primary_key=True)
-    text = Column('name', Text)
+    content = Column('content', Text)
     speaked_at = Column('speaked_at', DateTime)
 
 
