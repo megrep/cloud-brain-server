@@ -29,7 +29,7 @@ class ApiView(FlaskView):
         speaked_at = request.json['speaked_at']
 
         print('*** request.json ***')
-        print(request.json)
+        # print(request.json)
         print('*** ************ ***')
 
         voice = base64.b64decode(voice)
@@ -63,5 +63,5 @@ for plugin in PLUGINS:
 print('--------------------')
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', ssl_context=(
+    app.run(debug=True, host='0.0.0.0', threaded=False, ssl_context=(
         'cert/server.crt', 'cert/server.key'))
