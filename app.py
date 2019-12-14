@@ -1,22 +1,25 @@
-from flask import Flask, render_template, request
-from flask_classy import FlaskView, route
+from flask import Flask
+from flask_classy import FlaskView
+
+from setting import PLUGINS
+
 
 app = Flask(__name__)
-##この上まではテンプレみたいなものなので
 
-class HelloView(FlaskView):
-    @app.route('/home')
-    def home(self):
-        return render_template('home.html')
 
-    def search():
-        return render_template('search.html')
+class IndexView(FlaskView):
+    def index(self):
+        return "hello world"
 
-    @route('/result',methods=['POST','GET'])
-    def result():
-        return render_template('result.html')
 
-HelloView.register(app)
+IndexView.register(app)
 
-if __name__ == "__main__":
-    app.run(host='0.0.0.0',port=5000,debug=True)
+print('--- LOAD PLUGINS ---')
+for plugin in PLUGINS:
+    print(f'load {plugin.plugin_name}')
+    plugin.register(app)
+
+print('--------------------')
+
+if __name__ == '__main__':
+    app.run(debug=True, host='0.0.0.0')
