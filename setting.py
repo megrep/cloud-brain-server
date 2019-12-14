@@ -1,4 +1,4 @@
-from plugins.search.search import SearchView
+from plugins.search import SearchView
 
 PLUGINS = [
     SearchView
