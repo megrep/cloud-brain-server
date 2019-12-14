@@ -1,0 +1,81 @@
+h1 {
+  position: relative;
+  left: 345px;
+  display: inline-block;
+  margin-bottom: 1em;
+}
+h1:before {
+  content: '';
+  position: absolute;
+  bottom: -15px;
+  display: inline-block;
+  width: 60px;
+  height: 5px;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+  background-color: black;
+  border-radius: 2px;
+}
+
+p.TT{
+  position: relative;
+  left:30px;
+}
+
+.cp_iptxt {
+	position: relative;
+	width: 80%;
+	margin: 40px 3%;
+}
+.cp_iptxt input[type='text'] {
+	font: 15px/24px sans-serif;
+	box-sizing: border-box;
+	width: 100%;
+	padding: 0.3em;
+	transition: 0.3s;
+	letter-spacing: 1px;
+	color: gray;
+	border: none;
+	border-bottom: 2px solid #1b2538;
+	background: transparent;
+}
+.ef input[type='text']:focus {
+	border-bottom: 2px solid #da3c41;
+	outline: none;
+}
+.time{
+  position: relative;
+  left: 30px;
+}
+.con{
+  position: relative;
+  left: 300px;
+}
+.time-form{
+  position: relative;
+  border: none;
+  border-bottom: 2px solid #1b2538;
+  width: 80%;
+  color: gray;
+  font-weight: bold;
+}
+
+.my-bottun {
+  position: relative;
+  left: 350px;
+  display: inline-block;
+  font-weight: bold;
+  padding: 0.5em 1em;
+  text-decoration: none;
+  border-left: solid 4px black;
+  border-right: solid 4px black	;
+  color: black;
+  background: silver;
+  transition: .4s;
+}
+
+.my-bottun:hover {
+  background: #668ad8;
+  color: #FFF;
+}

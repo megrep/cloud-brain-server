@@ -18,21 +18,10 @@ class SearchView(FlaskView):
         speaked_at_start = request.args.get("speaked_at_start")
         speaked_at_end = request.args.get("speaked_at_end")
 
-        if not content and (not speaked_at_start or not speaked_at_end):
-            return render_template('plugins/search/index.html', title="this is search title")
+        if speaked_at_start and speaked_at_end:
+            if not content:
+                content = ''
 
-        elif speaked_at_start and speaked_at_end:
-            speaked_at_start = dateutil.parser.parse(speaked_at_start)
-            speaked_at_end = dateutil.parser.parse(speaked_at_end)
-
-            conversations = session.query(Conversation) \
-                .filter(Conversation.speaked_at >= speaked_at_start, Conversation.speaked_at <= speaked_at_end)
-
-        elif content:
-            conversations = session.query(Conversation) \
-                .filter(Conversation.content.like(f'%{content}%'))
-
-        else:
             speaked_at_start = dateutil.parser.parse(speaked_at_start)
             speaked_at_end = dateutil.parser.parse(speaked_at_end)
 
@@ -42,6 +31,9 @@ class SearchView(FlaskView):
                     Conversation.speaked_at >= speaked_at_start,
                     Conversation.speaked_at <= speaked_at_end
             )
+
+        else:
+            return render_template('plugins/search/index.html', title="this is search title")
 
         print(f"=== conversation ===", file=sys.stderr)
 
