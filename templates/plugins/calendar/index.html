@@ -1,0 +1,49 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>calendar</title>
+    <link rel="stylesheet" href="/static/result.css" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/purecss@1.0.1/build/pure-min.css"
+      integrity="sha384-oAOxQR6DkCoMliIh8yFnu25d7Eq/PHS21PClpwjOTeU2jRSq11vu66rf90/cZr47"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <h1>CloudBrain</h1>
+    <br />
+    <h3>calendar</h3>
+    <table border="１" 　width="200" class="pure-table">
+      <tr>
+        <th>時間</th>
+        <th>内容</th>
+        <th>追加</th>
+      </tr>
+      {% for conversation in conversations %}
+      <tr>
+        <td>{{conversation.speaked_at}}</td>
+        <td>{{conversation.content}}</td>
+        <td>
+          <button
+            class="pure-button"
+            onclick="location.href='?id={{conversation.id}}'"
+          >
+            予定に追加
+          </button>
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+
+    <a href="/search/home" class="bottun">home</a>
+
+    {% if use_alert %}
+
+    <script>
+      alert("カレンダーに追加しました");
+    </script>
+
+    {% endif %}
+  </body>
+</html>
