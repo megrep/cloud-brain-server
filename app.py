@@ -42,9 +42,8 @@ class ApiView(FlaskView):
         print('*** ************ ***')
 
         # voiceを変換しチクリ
-
         conversation = Conversation()
-        conversation.text = voice
+        conversation.content = 'hello'
         conversation.speaked_at = speaked_at
         session.add(conversation)
         session.commit()
@@ -62,4 +61,5 @@ for plugin in PLUGINS:
 print('--------------------')
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', ssl_context=('cert/server.crt', 'cert/server.key'))
+    app.run(debug=True, host='0.0.0.0', ssl_context=(
+        'cert/server.crt', 'cert/server.key'))
