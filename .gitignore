@@ -131,3 +131,5 @@ cert/
 key.py
 test.ogg
 tmp.wav
+
+/julius/ssr-kit-v4.5/
