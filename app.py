@@ -4,6 +4,7 @@ from flask_classy import FlaskView
 from setting import PLUGINS
 
 import base64
+from datetime import datetime
 
 
 app = Flask(__name__)
@@ -19,15 +20,22 @@ IndexView.register(app)
 
 class ApiView(FlaskView):
     def post(self):
+        voice = request.json['data']
+        speaked_at = request.json['speaked_at']
+
         print('*** request.json ***')
         print(request.json)
         print('*** ************ ***')
 
-        voice = request.json['data']
         voice = base64.b64decode(voice)
 
         print('*** request.json ***')
         print(voice)
+        print('*** ************ ***')
+
+        speaked_at = datetime.fromisoformat(speaked_at)
+        print('**** speaked_at ****')
+        print(speaked_at)
         print('*** ************ ***')
 
         return "ok"
