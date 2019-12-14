@@ -1,0 +1,57 @@
+.cp_bgpattern01 {
+	background-color: #dedede;
+	background-image:
+	 linear-gradient(#ecebeb 50%, transparent 50%, transparent);
+	background-size: 10px 10px;
+}
+
+h1 {
+  position: relative;
+  left: 345px;
+  display: inline-block;
+  margin-bottom: 1em;
+}
+h1:before {
+  content: '';
+  position: absolute;
+  bottom: -15px;
+  display: inline-block;
+  width: 60px;
+  height: 5px;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+  background-color: black;
+  border-radius: 2px;
+}
+
+
+ul {
+  position: fixed;
+  top: 100px;
+	width: 200px;
+	margin: 0;
+	padding: 0;
+  list-style-type: none;
+	background-color: #eeeeee;
+}
+li a {
+	display: block;
+	padding: 8px 16px;
+	text-decoration: none;
+	color: #000000;
+}
+li {
+	text-align: center;
+}
+li:last-child {
+	border-bottom: none;
+}
+li a.active {
+	color: white;
+	background-color: #232020;
+}
+li a:hover:not(.active) {
+	color: white;
+	background-color: #ff7315;
+}
