@@ -130,3 +130,4 @@ dmypy.json
 key.py
 test.ogg
 cert/
+tmp.wav
