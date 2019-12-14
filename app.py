@@ -7,7 +7,7 @@ from model import session
 
 from setting import PLUGINS
 
-USE_IBM = True
+USE_IBM = False
 
 import base64
 import dateutil.parser
@@ -15,6 +15,7 @@ import julius.recognition as recognition
 import threading
 import os
 import sys
+from conv_endian import *
 
 if USE_IBM:
     import ibm
@@ -32,38 +33,28 @@ class IndexView(FlaskView):
 
 IndexView.register(app)
 
-def recognize(voice, speaked_at):
-    voice = recognition.recognize(voice)
-    print('****** voice *******')
-    print(voice)
-    print('*** ************ ***')
-
-    conversation = Conversation(content=voice, speaked_at=speaked_at)
-
-    session.add(conversation)
-    session.commit()
-
 class ApiView(FlaskView):
     def post(self):
         voice = request.json['data']
         speaked_at = request.json['speaked_at']
 
-        print('*** request.json ***')
-        # print(request.json)
-        print('*** ************ ***')
+        print('*** request.json ***', file=sys.stderr)
+        # print(request.json, file=sys.stderr)
+        print('*** ************ ***', file=sys.stderr)
 
         voice = base64.b64decode(voice)
+        voice = conv_endian(voice)
 
         speaked_at = dateutil.parser.parse(speaked_at)
-        print('**** speaked_at ****')
-        print(speaked_at)
-        print('*** ************ ***')
+        print('**** speaked_at ****', file=sys.stderr)
+        print(speaked_at, file=sys.stderr)
+        print('*** ************ ***', file=sys.stderr)
 
         # voiceを認識
         voice = recognizer.recognize(voice)
-        print('****** voice *******')
-        print(voice)
-        print('*** ************ ***')
+        print('****** voice *******', file=sys.stderr)
+        print(voice, file=sys.stderr)
+        print('*** ************ ***', file=sys.stderr)
 
         conversation = Conversation(content=voice, speaked_at=speaked_at)
 
@@ -75,12 +66,12 @@ class ApiView(FlaskView):
 
 ApiView.register(app)
 
-print('--- LOAD PLUGINS ---')
+print('--- LOAD PLUGINS ---', file=sys.stderr)
 for plugin in PLUGINS:
-    print(f'load {plugin.plugin_name}')
+    print(f'load {plugin.plugin_name}', file=sys.stderr)
     plugin.register(app)
 
-print('--------------------')
+print('--------------------', file=sys.stderr)
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', threaded=False, ssl_context=(
