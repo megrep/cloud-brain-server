@@ -1,4 +1,7 @@
 import json
+import sys
+import wave
+
 
 import key
 
@@ -17,18 +20,28 @@ stt = SpeechToTextV1(authenticator=authenticator)
 stt.set_service_url(URL)
 
 
-def recognize(binary):
-    with open('tmp.wav', 'rb+') as f:
-        f.write(binary)
+def bin2wav(filedata, filename, channels=1, sampwidth=2, framerate=44100, nframe=0, comptype='NONE', compname='not compressed'):
+    w = wave.Wave_write(filename)
+    p = (channels, sampwidth, framerate, nframe, comptype, compname)
+    w.setparams(p)
+    w.writeframes(filedata)
+    w.close()
 
-    with open("test.wav", "rb") as f:
-        result = stt.recognize(audio=audio_file, content_type="audio/wav", timestamps=False, model=jp)
-    
+
+def recognize(binary):
+    nframe = len(binary) // 2
+
+    bin2wav(filedata=binary, filename="tmp.wav", nframe=nframe)
+
+    with open("tmp.wav", "rb") as f:
+        result = stt.recognize(
+            audio=f, content_type="audio/wav", timestamps=False, model=jp)
+
     result = result.get_result()
 
     try:
         msg = result['results'][0]['alternatives'][0]['transcript']
+        print(msg, file=sys.stderr)
         return msg
     except:
         return None
-
