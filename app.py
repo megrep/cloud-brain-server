@@ -9,6 +9,7 @@ from setting import PLUGINS
 
 import base64
 import dateutil.parser
+import julius.recognition as recognition
 
 app = Flask(__name__)
 
@@ -31,17 +32,17 @@ class ApiView(FlaskView):
         print('*** ************ ***')
 
         voice = base64.b64decode(voice)
-        voice = voice.decode('utf-8')
-        print('*** request.json ***')
-        print(voice)
-        print('*** ************ ***')
 
         speaked_at = dateutil.parser.parse(speaked_at)
         print('**** speaked_at ****')
         print(speaked_at)
         print('*** ************ ***')
 
-        # voiceを変換しチクリ
+        # voiceを認識
+        voice = recognition.recognize(voice)
+        print('****** voice *******')
+        print(voice)
+        print('*** ************ ***')
 
         conversation = Conversation(content=voice, speaked_at=speaked_at)
         session.add(conversation)
@@ -60,4 +61,8 @@ for plugin in PLUGINS:
 print('--------------------')
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0')
+    recognition.initialize()
+
+    app.run(debug=True, host='0.0.0.0', threaded=False)
+
+    recognition.kill()
