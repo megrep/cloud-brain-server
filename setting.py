@@ -1,5 +1,5 @@
-from plugins import search
+from plugins.search.search import SearchView
 
 PLUGINS = [
-    search.SearchView
+    SearchView
 ]

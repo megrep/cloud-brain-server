@@ -1,5 +1,6 @@
 from flask_classy import FlaskView
 from model import Conversation
+from jinja2 import Environment, FileSystemLoader
 
 
 class SearchView(FlaskView):
