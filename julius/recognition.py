@@ -10,11 +10,9 @@ port = 10500   #juliusサーバーモードのポート
 chunkSize = 1024
 
 def recognize(voice):
-    while os.path.exists('/app/recognize.lock'):
-        time.sleep(1)
+    with open('tmp.dat', 'wb') as f:
+        f.write(voice)
 
-    os.system('touch /app/recognize.lock')
-    
     p = subprocess.Popen(
         ["/app/julius/julius-start.sh"],
         stdout=subprocess.PIPE,
@@ -22,9 +20,11 @@ def recognize(voice):
         shell=True
     ) # julius起動スクリプトを実行
 
+    time.sleep(3)
+
     p.stdin.write(voice)
 
-    time.sleep(10)
+    time.sleep(3)
 
     # pid = str(p.stdout.read().decode('utf-8')) # juliusのプロセスIDを取得
     client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -32,15 +32,19 @@ def recognize(voice):
 
     data = '' # dataの初期化
 
+    word = None
+
     while True:
         tmp = str(client.recv(chunkSize).decode('utf-8')) #dataが空のときjuliusからdataに入れる
+        print(tmp, file=sys.stderr)
+        if len(tmp) == 0:
+            break
+
         data += tmp
 
         # print(data) # 認識した言葉を表示して確認
         if '</RECOGOUT>\n.' in data: 
             print(data)
-
-            word = None
 
             root = ET.fromstring('<?xml version="1.0"?>\n' + data[data.find('<RECOGOUT>'):].replace('\n.', ''))
             for whypo in root.findall('./SHYPO/WHYPO'):
@@ -51,8 +55,6 @@ def recognize(voice):
     p.kill()
     # subprocess.call(["kill " + pid], shell=True)# juliusのプロセスを終了する。
     client.close()
-
-    os.system('rm /app/recognize.lock')
 
     return word
 
