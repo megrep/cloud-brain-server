@@ -12,6 +12,9 @@ USE_IBM = True
 import base64
 import dateutil.parser
 import julius.recognition as recognition
+import threading
+import os
+import sys
 
 if USE_IBM:
     import ibm
@@ -29,6 +32,16 @@ class IndexView(FlaskView):
 
 IndexView.register(app)
 
+def recognize(voice, speaked_at):
+    voice = recognition.recognize(voice)
+    print('****** voice *******')
+    print(voice)
+    print('*** ************ ***')
+
+    conversation = Conversation(content=voice, speaked_at=speaked_at)
+
+    session.add(conversation)
+    session.commit()
 
 class ApiView(FlaskView):
     def post(self):
