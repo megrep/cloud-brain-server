@@ -17,7 +17,7 @@ session = scoped_session(
 class Conversation(Base):
     __tablename__ = 'conversation'
     id = Column('id', Integer, primary_key=True)
-    text = Column('name', Text)
+    content = Column('content', Text)
     speaked_at = Column('speaked_at', DateTime)
 
 
