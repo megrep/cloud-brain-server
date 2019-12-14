@@ -13,14 +13,22 @@ URL = 'https://stream.watsonplatform.net/speech-to-text/api'
 
 authenticator = IAMAuthenticator(key.APIKEY)
 
-audio_file = open("test.ogg", "rb")
-
 stt = SpeechToTextV1(authenticator=authenticator)
 stt.set_service_url(URL)
-result = stt.recognize(audio = audio_file, content_type="audio/ogg",timestamps = False, model=jp)
-result = result.get_result()
 
-msg = result['results'][0]['alternatives'][0]['transcript']
-print(msg)
-print (json.dumps(result, indent=2, ensure_ascii=False))
+
+def recognize(binary):
+    with open('tmp.wav', 'rb+') as f:
+        f.write(binary)
+
+    with open("test.wav", "rb") as f:
+        result = stt.recognize(audio=audio_file, content_type="audio/wav", timestamps=False, model=jp)
+    
+    result = result.get_result()
+
+    try:
+        msg = result['results'][0]['alternatives'][0]['transcript']
+        return msg
+    except:
+        return None
 
