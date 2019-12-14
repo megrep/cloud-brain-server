@@ -1,6 +1,6 @@
 h3 {
   position: relative;
-  left:370px;
+  left:350px;
   display: inline-block;
   padding: 0 55px;
 }
@@ -25,7 +25,7 @@ h3:after {
 
 h1 {
   position: relative;
-  left: 370px;
+  left: 350px;
   display: inline-block;
   margin-bottom: 1em;
 }
@@ -64,15 +64,15 @@ td,th{
 }
 th:first-of-type,
 td:first-of-type{
-  background: #b2ffd8;
+  background: #eaeaea;
 }
 th:nth-of-type(1),
 td:nth-of-type(1){
   width: 150px;
-  background: #d1ffd1;
+  background: #d4d7dd;
 }
 th:nth-of-type(2),
 td:nth-of-type(2){
   width:auto;
-  background: #e8ffd1;
+  background: #eaeaea;
 }
