@@ -7,13 +7,20 @@ from model import session
 
 from setting import PLUGINS
 
+USE_IBM = True
+
 import base64
 import dateutil.parser
-import ibm
 import julius.recognition as recognition
 
-app = Flask(__name__)
+if USE_IBM:
+    import ibm
+    recognizer = ibm
+else:
+    import julius.recognition as julius
+    recognizer = julius
 
+app = Flask(__name__)
 
 class IndexView(FlaskView):
     def index(self):
@@ -40,7 +47,7 @@ class ApiView(FlaskView):
         print('*** ************ ***')
 
         # voiceを認識
-        voice = ibm.recognize(voice)
+        voice = recognizer.recognize(voice)
         print('****** voice *******')
         print(voice)
         print('*** ************ ***')
