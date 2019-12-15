@@ -20,13 +20,17 @@ def recognize(voice):
         shell=True
     ) # julius起動スクリプトを実行
 
-    time.sleep(3)
-
-    p.stdin.write(voice)
+    pid = str(p.stdout.read().decode('utf-8')) # juliusのプロセスIDを取得
 
     time.sleep(3)
 
-    # pid = str(p.stdout.read().decode('utf-8')) # juliusのプロセスIDを取得
+    try:
+        p.stdin.write(voice)
+    except Exception as e:
+        print('stdin write error' + str(e))
+
+    time.sleep(3)
+
     client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     client.connect((host, port)) #サーバーモードで起動したjuliusに接続
 
@@ -34,17 +38,15 @@ def recognize(voice):
 
     word = None
 
-    while True:
+    for _ in range(100):
         tmp = str(client.recv(chunkSize).decode('utf-8')) #dataが空のときjuliusからdataに入れる
         print(tmp, file=sys.stderr)
-        if len(tmp) == 0:
-            break
 
         data += tmp
 
         # print(data) # 認識した言葉を表示して確認
         if '</RECOGOUT>\n.' in data: 
-            print(data)
+            print(data, file=sys.stderr)
 
             root = ET.fromstring('<?xml version="1.0"?>\n' + data[data.find('<RECOGOUT>'):].replace('\n.', ''))
             for whypo in root.findall('./SHYPO/WHYPO'):
@@ -53,10 +55,10 @@ def recognize(voice):
             break
 
     p.kill()
-    # subprocess.call(["kill " + pid], shell=True)# juliusのプロセスを終了する。
+    subprocess.call(["kill " + pid], shell=True)# juliusのプロセスを終了する。
     client.close()
 
-    return word
+    # return word
 
 # 参考文献
 #  https://qiita.com/fishkiller/items/c6c5c4dcd9bb8184e484
